@@ -1,14 +1,14 @@
 // src/components/LanguageSwitcher.tsx
 import { useRouter } from '@tanstack/react-router'
-import { setLocale, locales, getLocale } from '../paraglide/runtime'
+import { locales, getLocale, setLocale, type Locale } from '../paraglide/runtime'
 
 export function LanguageSwitcher() {
   const router = useRouter()
   const currentLanguage = getLocale()
 
-  const handleLanguageChange = (newLang: string) => {
+  const handleLanguageChange = (newLang: Locale) => {
     // 1. Actualizas el estado interno de Paraglide
-    setLocale({ locale: newLang })
+    setLocale(newLang)
     
     // 2. Le dices a TanStack Router que recargue la ruta actual 
     // para que la URL se actualice (ej: de /proyectos a /en/proyectos)

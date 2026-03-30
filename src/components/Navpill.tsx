@@ -50,7 +50,6 @@ export function NavPill() {
               key={tab.label}
               to={tab.to}
               data-id={tab.label}
-              suppressHydrationWarning={true}
               // 1. Base classes (NO text color here)
               className='inline-flex h-10 w-10 items-center justify-center transition-colors duration-100 hover:text-on-surface hover:rounded-lg'
               // 2. Applied ONLY when active
@@ -64,14 +63,17 @@ export function NavPill() {
               activeOptions={{ exact: tab.to === '/' }}
             >
               {tab.icon}
+              
             </Link>
+
+              
           ))}
 
         
         </AnimatedBackground>
         <hr className='text-outline-variant mx-1'/>
         <ThemeToggle/>
-        <LanguageSwitcher/>
+        {/* <LanguageSwitcher /> */}
       </div>
     </div>
   );
