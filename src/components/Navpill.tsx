@@ -2,6 +2,7 @@ import { Home, PhoneCall, Presentation, User } from 'lucide-react';
 import { AnimatedBackground } from '../../components/motion-primitives/animated-background';
 import { Link } from '@tanstack/react-router';
 import ThemeToggle from './ThemeToggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 
 export function NavPill() {
@@ -49,6 +50,7 @@ export function NavPill() {
               key={tab.label}
               to={tab.to}
               data-id={tab.label}
+              suppressHydrationWarning={true}
               // 1. Base classes (NO text color here)
               className='inline-flex h-10 w-10 items-center justify-center transition-colors duration-100 hover:text-on-surface hover:rounded-lg'
               // 2. Applied ONLY when active
@@ -69,6 +71,7 @@ export function NavPill() {
         </AnimatedBackground>
         <hr className='text-outline-variant mx-1'/>
         <ThemeToggle/>
+        <LanguageSwitcher/>
       </div>
     </div>
   );
