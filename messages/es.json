@@ -1,4 +1,12 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "aboutme": "Como Diseñador Integral, mi enfoque es acortar la brecha entre diseño y código. Busco un rol como Product Designer o UX/UI donde pueda liderar proyectos asegurando que la experiencia del usuario sea tan atractiva como viable de desarrollar. Combino dominio avanzado de Figma con bases en programación y gestión ágil (Scrum/Shape Up) para lograr entregas eficientes y de alto valor."
+
+  "intro_title": "Diseñador",
+  "intro_title_options": "Integral",
+  "intro_title_options_1": "UX/UI",
+  "intro_title_options_2": "Entretención y Gamificación",
+
+
+  "aboutme": "Como Diseñador Integral, mi enfoque es acercar diseño y código. He trabajado en roles como Product Designer o UX/UI liderando proyectos asegurando que la experiencia del usuario sea tan atractiva como viable de desarrollar. Combino dominio avanzado de Figma con bases en programación y gestión ágil (Scrum/Shape Up) para lograr entregas eficientes y de alto valor."
+  
 }

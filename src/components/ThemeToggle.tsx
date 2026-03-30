@@ -64,7 +64,7 @@ export default function ThemeToggle() {
         <Moon className="h-5 w-5 text-indigo-400" strokeWidth={2} />
         
       ) : (
-        <Sun className="h-5 w-5 text-amber-500" strokeWidth={2} />
+        <Sun className="h-5 w-5 text-amber-200" strokeWidth={2} />
         
       )}
     </button>

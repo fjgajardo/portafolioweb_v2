@@ -7,10 +7,13 @@ import matter from 'gray-matter'
 export type Project = {
   slug: string;
   title: string;
-  tech: string;
-  startDate: string;
-  endDate: string;
+  date: string;
   content: string;
+  leyendaBoton: string;
+  goTo: string;
+  img1: string;
+  img0: string;
+  img2: string;
 }
 
 
@@ -121,14 +124,17 @@ export const getProjects = createServerFn({ method: 'GET' })
         return {
           slug: filename.replace(/\.md$/, ''), // Remove .md for the URL
           title: data.title,
-          tech: data.tech,
-          startDate: data.startDate,
-          endDate: data.endDate,
+          date: data.date,
           content: content,
+          leyendaBoton: data.leyendaBoton,
+          goTo: data.goTo,
+          img0: data.img0,
+          img1: data.img1,
+          img2: data.img2,
         }
       })
     )
     
     // Optional: Sort by date descending
-    return projects.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+    return projects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   })

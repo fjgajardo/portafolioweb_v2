@@ -34,7 +34,7 @@ export function NavPill() {
 
   return (
     <div className='absolute inset-y-0 left-0 flex items-center m-10' >
-      <div className='flex flex-col rounded-xl gap-1 bg-surface-container p-2'>
+      <div className='flex flex-col rounded-xl gap-1  p-2 glass_effect'>
         <AnimatedBackground
 
           className='rounded-lg bg-surface-container-highest'

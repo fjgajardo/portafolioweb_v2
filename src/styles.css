@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Sen:wght@400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Lexend:wght@100..900&family=Sen:wght@400..800&display=swap');
 
 @import "tailwindcss";
 
@@ -15,24 +15,28 @@
 @theme {
   --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sen";
-  --color-primary: #006971;
-  --color-on-primary: #FFFFFF;
-  --color-secondary: #4A6366;
+  --font-mono: "Doto";
+  --color-primary: rgb(0, 105, 113);
+  --color-on-primary: rgb(255, 255, 255);
+  --color-secondary: rgb(74, 99, 102);
   --color-on-secondary: #FFFFFF;
   --color-on-surface: #161D1D;
   --color-on-surface-variant: #3F484A;
-  --color-outline: #6F797A;
-  --color-outline-variant: #BEC8C9;
+  --color-outline: rgb(111, 121, 122);
+  --list-outline: 111,121,122;
+  --color-outline-variant: rgb(190, 200, 201);
+  --list-outline: 190,200,201;
   --color-primary-container: #9DF0FA;
   --color-on-primary-container: #004F55;
   --color-secondary-container: #CDE7EB;
   --color-on-secondary-container: #324B4E;
   --color-background: #F5FAFB;
-  --color-surface: #F5FAFB;
+  --color-surface: rgb(245, 250, 251);
   --color-surface-variant: #DAE4E5;
   --color-surface-container-lowest: #FFFFFF;
   --color-surface-container-low: #EFF5F5;
-  --color-surface-container: #E9EFF0;
+  --color-surface-container: rgb(233, 239, 240);
+  --list-surface-container: 233,239,240;
   --color-surface-container-high: #E3E9EA;
   --color-surface-container-highest: #DEE4E4;
 
@@ -46,33 +50,36 @@
 .dark {
   --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sen";
-  --color-primary: #81d3dd;
+  --font-mono: "Doto";
+  --color-primary: rgb(129, 211, 221);
   --color-on-primary: #00363B;
   --color-secondary: #B1CBCF;
   --color-on-secondary: #1C3437;
   --color-on-surface: #dee4e4;
   --color-on-surface-variant: #BEC8C9;
-  --color-outline: #899294;
-  --color-outline-variant: #3F484A;
+  --color-outline: rgb(137, 146, 148);
+  --list-outline: 137,146,148;
+  --color-outline-variant: rgb(63, 72, 74);
+  --list-outline: 63,72,74;
   --color-primary-container: #004F55;
   --color-on-primary-container: #9DF0FA;
   --color-secondary-container: #324B4E;
   --color-on-secondary-container: #CDE7EB;
   --color-background: #0E1415;
-  --color-surface: #0E1415;
+  --color-surface: rgb(14, 20, 21);
   --color-surface-variant: #3f484a;
   --color-surface-container-lowest: #090F10;
   --color-surface-container-low: #161D1D;
-  --color-surface-container: #1A2121;
+  --color-surface-container: rgb(26, 33, 33);
+  --list-surface-container: 26,33,33;
   --color-surface-container-high: #252B2C;
   --color-surface-container-highest: #303637;
-
   --drop-shadow-1: 0 1px 3px rgba(129, 211, 221, 0.15);
   --drop-shadow-2: 0 2px 6px rgba(129, 211, 221, 0.15);
   --drop-shadow-3: 0 4px 8px rgba(129, 211, 221, 0.15);
   --drop-shadow-4: 0 6px 10px rgba(129, 211, 221, 0.15);
   --drop-shadow-5: 0 8px 12px rgba(129, 211, 221, 0.15);
-  
+
 }
 
 * {
@@ -233,3 +240,31 @@ body {
   }
 }
 
+.gradient-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+
+  /* Layering multiple radial gradients */
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 160, 100, 0.4) 0%, rgba(0,0,0,0) 60%), /* Main Warm 1 */
+    radial-gradient(circle at 80% 80%, rgba(100, 180, 255, 0.3) 0%, rgba(0,0,0,0) 50%), /* Sub Cool 1 */
+    radial-gradient(ellipse at 40% 60%, rgba(255, 200, 150, 0.2) 0%, rgba(0,0,0,0) 70%), /* Center Glow */
+    radial-gradient(circle at 20% 90%, rgba(200, 200, 255, 0.1) 0%, rgba(0,0,0,0) 40%); /* Sub Cool 2 */
+
+  /* Key effects to make it soft and organic */
+  background-blend-mode: hard-light; /* Essential for mixing the colors */
+  filter: blur(100px); /* Massive blur for softness */
+  transform: scale(1.2); /* To hide blur artifacts at the edges */
+  opacity: 0.25;
+}
+
+.glass_effect {
+  background-color: rgba(var(--list-surface-container), 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(var(--list-outline), 0.60);
+
+}
