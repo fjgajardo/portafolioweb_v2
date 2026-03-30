@@ -1,71 +1,53 @@
 import { useEffect, useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 
-type ThemeMode = 'light' | 'dark' | 'auto'
+// Removed 'auto' - it is now strictly a binary choice
+type ThemeMode = 'light' | 'dark'
 
 function getInitialMode(): ThemeMode {
+  // Safe fallback for Server-Side Rendering
   if (typeof window === 'undefined') {
-    return 'auto'
+    return 'light' 
   }
 
+  // 1. Check if the user has a saved preference
   const stored = window.localStorage.getItem('theme')
-  if (stored === 'light' || stored === 'dark' || stored === 'auto') {
+  if (stored === 'light' || stored === 'dark') {
     return stored
   }
 
-  return 'auto'
+  // 2. If no saved preference, default to system preference immediately
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function applyThemeMode(mode: ThemeMode) {
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  const resolved = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode
+  if (typeof window === 'undefined') return
 
   document.documentElement.classList.remove('light', 'dark')
-  document.documentElement.classList.add(resolved)
-
-  if (mode === 'auto') {
-    document.documentElement.removeAttribute('data-theme')
-  } else {
-    document.documentElement.setAttribute('data-theme', mode)
-  }
-
-  document.documentElement.style.colorScheme = resolved
+  document.documentElement.classList.add(mode)
+  document.documentElement.setAttribute('data-theme', mode)
+  document.documentElement.style.colorScheme = mode
 }
 
 export default function ThemeToggle() {
-  const [mode, setMode] = useState<ThemeMode>('auto')
+  const [mode, setMode] = useState<ThemeMode>('light')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const initialMode = getInitialMode()
     setMode(initialMode)
     applyThemeMode(initialMode)
   }, [])
 
-  useEffect(() => {
-    if (mode !== 'auto') {
-      return
-    }
-
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => applyThemeMode('auto')
-
-    media.addEventListener('change', onChange)
-    return () => {
-      media.removeEventListener('change', onChange)
-    }
-  }, [mode])
-
   function toggleMode() {
-    const nextMode: ThemeMode =
-      mode === 'light' ? 'dark' : mode === 'dark' ? 'auto' : 'light'
+    const nextMode: ThemeMode = mode === 'light' ? 'dark' : 'light'
     setMode(nextMode)
     applyThemeMode(nextMode)
     window.localStorage.setItem('theme', nextMode)
   }
 
-  const label =
-    mode === 'auto'
-      ? 'Theme mode: auto (system). Click to switch to light mode.'
-      : `Theme mode: ${mode}. Click to switch mode.`
+  const label = `Theme mode: ${mode}. Click to switch to ${mode === 'light' ? 'dark' : 'light'} mode.`
 
   return (
     <button
@@ -73,9 +55,18 @@ export default function ThemeToggle() {
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      className="rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm font-semibold text-[var(--sea-ink)] shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
+      // Removed the static text color to allow the icons to dictate their own colors
+      className="flex items-center justify-center rounded-full bg-[var(--chip-bg)] p-2 shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
     >
-      {mode === 'auto' ? 'Auto' : mode === 'dark' ? 'Dark' : 'Light'}
+      {!mounted ? (
+        <span className="h-5 w-5 opacity-0" />
+      ) : mode === 'light' ? (
+        <Moon className="h-5 w-5 text-indigo-400" strokeWidth={2} />
+        
+      ) : (
+        <Sun className="h-5 w-5 text-amber-500" strokeWidth={2} />
+        
+      )}
     </button>
   )
 }

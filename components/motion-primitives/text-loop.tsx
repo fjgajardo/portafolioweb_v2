@@ -2,11 +2,12 @@
 import { cn } from '../../lib/utils';
 import {
   motion,
-  AnimatePresence,
-  type Transition,
-  type Variants,
-  type AnimatePresenceProps,
+  AnimatePresence
+  
+  
+  
 } from 'motion/react';
+import type {Transition, Variants, AnimatePresenceProps} from 'motion/react';
 import { useState, useEffect, Children } from 'react';
 
 export type TextLoopProps = {

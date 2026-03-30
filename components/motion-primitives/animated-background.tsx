@@ -1,14 +1,16 @@
 'use client';
 import { cn } from '../../lib/utils';
-import { AnimatePresence, type Transition, motion } from 'motion/react';
+import { AnimatePresence,  motion } from 'motion/react';
+import type {Transition} from 'motion/react';
 import {
   Children,
   cloneElement,
-  type ReactElement,
+  
   useEffect,
   useState,
-  useId,
+  useId
 } from 'react';
+import type {ReactElement} from 'react';
 
 export type AnimatedBackgroundProps = {
   children:
@@ -55,7 +57,10 @@ export function AnimatedBackground({
           onMouseLeave: () => handleSetActiveId(null),
         }
       : {
-          onClick: () => handleSetActiveId(id),
+          onClick: (e: any) => {
+            handleSetActiveId(id);
+            child.props.onClick?.(e); // <-- Add this to preserve your custom onClick!
+          },
         };
 
     return cloneElement(

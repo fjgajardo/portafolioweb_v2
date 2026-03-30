@@ -14,6 +14,7 @@ export type Project = {
 }
 
 
+
 export type Experience = {
     slug: string;
     jobTitle: string;

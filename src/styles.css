@@ -1,91 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Sen:wght@400..800&display=swap');
+
 @import "tailwindcss";
 
+@import "tw-animate-css";
+
+@import "shadcn/tailwind.css";
+
+@import "@fontsource-variable/geist";
+
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sen";
+  --color-primary: #006971;
+  --color-on-primary: #FFFFFF;
+  --color-secondary: #4A6366;
+  --color-on-secondary: #FFFFFF;
+  --color-on-surface: #161D1D;
+  --color-on-surface-variant: #3F484A;
+  --color-outline: #6F797A;
+  --color-outline-variant: #BEC8C9;
+  --color-primary-container: #9DF0FA;
+  --color-on-primary-container: #004F55;
+  --color-secondary-container: #CDE7EB;
+  --color-on-secondary-container: #324B4E;
+  --color-background: #F5FAFB;
+  --color-surface: #F5FAFB;
+  --color-surface-variant: #DAE4E5;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #EFF5F5;
+  --color-surface-container: #E9EFF0;
+  --color-surface-container-high: #E3E9EA;
+  --color-surface-container-highest: #DEE4E4;
+
+  --drop-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --drop-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --drop-shadow-3: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --drop-shadow-4: 0 6px 10px rgba(0, 0, 0, 0.15);
+  --drop-shadow-5: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
-:root {
-  --primary: #006971;
-  --on-primary: #FFFFFF;
-  --secondary: #4A6366;
-  --on-secondary: #FFFFFF;
-  --on-surface: #161D1D;
-  --on-surface-variant: #3F484A;
-  --outline: #6F797A;
-  --outline-variant: #BEC8C9;
-  --primary-container: #9DF0FA;
-  --on-primary-container: #004F55;
-  --secondary-container: #CDE7EB;
-  --on-secondary-container: #324B4E;
-  --background: #F5FAFB;
-  --surface: #F5FAFB;
-  --surface-variant: #DAE4E5;
-  --surface-container-lowest: #FFFFFF;
-  --surface-container-low: #EFF5F5;
-  --surface-container: #E9EFF0;
-  --surface-container-high: #E3E9EA;
-  --surface-container-hightest: #DEE4E4;
-}
+.dark {
+  --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sen";
+  --color-primary: #81d3dd;
+  --color-on-primary: #00363B;
+  --color-secondary: #B1CBCF;
+  --color-on-secondary: #1C3437;
+  --color-on-surface: #dee4e4;
+  --color-on-surface-variant: #BEC8C9;
+  --color-outline: #899294;
+  --color-outline-variant: #3F484A;
+  --color-primary-container: #004F55;
+  --color-on-primary-container: #9DF0FA;
+  --color-secondary-container: #324B4E;
+  --color-on-secondary-container: #CDE7EB;
+  --color-background: #0E1415;
+  --color-surface: #0E1415;
+  --color-surface-variant: #3f484a;
+  --color-surface-container-lowest: #090F10;
+  --color-surface-container-low: #161D1D;
+  --color-surface-container: #1A2121;
+  --color-surface-container-high: #252B2C;
+  --color-surface-container-highest: #303637;
 
-:root[data-theme="dark"] {
-  --primary: #81D3DD;
-  --on-primary: #00363B;
-  --secondary: #B1CBCF;
-  --on-secondary: #1C3437;
-  --on-surface: #DEE4E4;
-  --on-surface-variant: #BEC8C9;
-  --outline: #899294;
-  --outline-variant: #3F484A;
-  --primary-container: #004F55;
-  --on-primary-container: #9DF0FA;
-  --secondary-container: #324B4E;
-  --on-secondary-container: #CDE7EB;
-  --background: #0E1415;
-  --surface: #0E1415;
-  --surface-variant: #3F484A;
-  --surface-container-lowest: #090F10;
-  --surface-container-low: #161D1D;
-  --surface-container: #1A2121;
-  --surface-container-high: #252B2C;
-  --surface-container-hightest: #303637;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --primary: #81D3DD;
-    --on-primary: #00363B;
-    --secondary: #B1CBCF;
-    --on-secondary: #1C3437;
-    --on-surface: #DEE4E4;
-    --on-surface-variant: #BEC8C9;
-    --outline: #899294;
-    --outline-variant: #3F484A;
-    --primary-container: #004F55;
-    --on-primary-container: #9DF0FA;
-    --secondary-container: #324B4E;
-    --on-secondary-container: #CDE7EB;
-    --background: #0E1415;
-    --surface: #0E1415;
-    --surface-variant: #3F484A;
-    --surface-container-lowest: #090F10;
-    --surface-container-low: #161D1D;
-    --surface-container: #1A2121;
-    --surface-container-high: #252B2C;
-    --surface-container-hightest: #303637;
-  }
+  --drop-shadow-1: 0 1px 3px rgba(129, 211, 221, 0.15);
+  --drop-shadow-2: 0 2px 6px rgba(129, 211, 221, 0.15);
+  --drop-shadow-3: 0 4px 8px rgba(129, 211, 221, 0.15);
+  --drop-shadow-4: 0 6px 10px rgba(129, 211, 221, 0.15);
+  --drop-shadow-5: 0 8px 12px rgba(129, 211, 221, 0.15);
+  
 }
 
 * {
   box-sizing: border-box;
 }
 
-
 /* DISPLAY */
 .display-large {
-  font-family: "Noto Sans";
   font-size: 3.5625rem;
   font-style: normal;
   font-weight: 400;
@@ -93,26 +88,30 @@
   letter-spacing: -0.25px;
 }
 
+.display-xlarge {
+  font-size: 5.5rem;
+  font-style: normal;
+  font-weight: 100;
+  line-height: 6.3rem; /* 112.281% */
+  letter-spacing: -0.25px;
+}
+
 .display-medium {
-  font-family: "Noto Sans";
   font-size: 2.8125rem;
   font-style: normal;
   font-weight: 400;
   line-height: 3.25rem; /* 115.556% */
 }
- 
+
 .display-small {
-  font-family: "Noto Sans";
   font-size: 2.25rem;
   font-style: normal;
   font-weight: 400;
   line-height: 2.75rem; /* 122.222% */
 }
 
-
 /* HEADLINE */
 .headline-large {
-  font-family: "Noto Sans";
   font-size: 2rem;
   font-style: normal;
   font-weight: 400;
@@ -120,15 +119,13 @@
 }
 
 .headline-medium {
-  font-family: "Noto Sans";
   font-size: 1.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: 2.25rem; /* 128.571% */
 }
- 
+
 .headline-small {
-  font-family: "Noto Sans";
   font-size: 1.5rem;
   font-style: normal;
   font-weight: 400;
@@ -137,7 +134,6 @@
 
 /* BODY */
 .body-large {
-  font-family: Lexend;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
@@ -146,16 +142,14 @@
 }
 
 .body-medium {
-  font-family: Lexend;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.25rem; /* 142.857% */
   letter-spacing: 0.25px;
 }
- 
+
 .body-small {
-  font-family: Lexend;
   font-size: 0.75.rem;
   font-style: normal;
   font-weight: 400;
@@ -164,7 +158,6 @@
 }
 
 .label-large {
-  font-family: Lexend;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
@@ -173,16 +166,14 @@
 }
 
 .label-medium {
-  font-family: Lexend;
   font-size: 0.75rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1rem; /* 133.333% */
   letter-spacing: 0.5px;
 }
- 
+
 .label-small {
-  font-family: Lexend;
   font-size: 0.6875rem;
   font-style: normal;
   font-weight: 500;
@@ -191,7 +182,6 @@
 }
 
 .title-large {
-  font-family: Lexend;
   font-size: 1.375rem;
   font-style: normal;
   font-weight: 400;
@@ -199,28 +189,20 @@
 }
 
 .title-medium {
-  font-family: Lexend;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.5rem; /* 150% */
   letter-spacing: 0.15px;
 }
- 
+
 .title-small {
-  font-family: Lexend;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
   line-height: 1.25rem; /* 142.857% */
   letter-spacing: 0.1px;
 }
-
-
-
-
-
-
 
 html,
 body,
@@ -230,34 +212,15 @@ body,
 
 body {
   margin: 0;
-  color: var(--on-surface);
-  font-family: var(--font-sans);
-  background-color: var(--background);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
-a {
-  color: var(--lagoon-deep);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-
-a:hover {
-  color: #246f76;
-}
-
-
-
 .page-wrap {
   width: min(1080px, calc(100% - 2rem));
-  margin-inline: auto;
+  margin-inline: 10vw;
 }
-
-
 
 @keyframes rise-in {
   from {
@@ -268,9 +231,5 @@ a:hover {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.test {
-  font-size: 1rem;
 }
 

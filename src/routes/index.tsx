@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { TextLoop } from '../../components/motion-primitives/text-loop';
 import { getLastExperience } from '../../lib/post';
+import * as m from "../paraglide/messages"
+
 
 export const Route = createFileRoute('/')({
   loader: async () => {
@@ -13,10 +15,10 @@ function App() {
   const { lastestExperience } = Route.useLoaderData()
 
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
+    <main className="page-wrap px-2 pb-8 pt-60">
       <section className="intro">
-        <h1 className='display-small'>Fernando Gajardo</h1>
-        <p className='body-large'>
+        <h1 className='display-xlarge font-display'>Fernando Gajardo</h1>
+        <div className='body-large'>
           Diseñador {' '}
           <TextLoop
             className='overflow-y-clip'
@@ -51,40 +53,13 @@ function App() {
             <span>UX/UI</span>
             <span>Gamificación</span>
           </TextLoop> 
-          <p>Actualmente trabajando en: </p><span>{lastestExperience?.organization}</span> <span> como {lastestExperience?.jobTitle}</span>
-        </p>
+          
+        </div>
+        <p>Actualmente trabajando en: </p><span>{lastestExperience?.organization}</span> <span> como {lastestExperience?.jobTitle}</span>
       </section>
 
       <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
-          >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
-        ))}
+        <span>{m.aboutme()}</span>
       </section>
 
       <section className="island-shell mt-8 rounded-2xl p-6">
