@@ -17,8 +17,9 @@ function App() {
   const { projects } = Route.useLoaderData()
 
   return (
-    <main className="page-wrap px-2 pb-8 pt-60">
-      <section className="intro">
+    <main className=" h-screen w-screen flex flex-col justify">
+      <div className='h-3/7 flex items-end page-wrap px-10'>
+        <section className="intro">
         <InView
           variants={{
             hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },
@@ -73,16 +74,29 @@ function App() {
         </InView>     
         
       </section>
-      <Gallery projects={projects} />
 
-      <section >
-        
-        
-      </section>
+      </div>
+      <div className='h-1/7'>
 
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        
-      </section>
+      </div>
+      
+      <div className='h-3/7 justify-self-end relative'>
+        <section className='absolute h-full inset-y-0 right-0 w-6/8' >
+          <InView
+          
+          variants={{
+            hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },
+            visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
+          }}
+          viewOptions={{ margin: '0px 0px -200px 0px' }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className='h-full'>  
+            <Gallery projects={projects} />
+          </InView>   
+        </section>
+      </div>     
+      
+
     </main>
   )
 }

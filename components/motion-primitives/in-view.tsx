@@ -1,12 +1,11 @@
 'use client';
-import { type ReactNode, useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
+import type {ReactNode} from 'react';
 import {
   motion,
-  useInView,
-  type Variant,
-  type Transition,
-  type UseInViewOptions,
+  useInView
 } from 'motion/react';
+import type {Variant, Transition, UseInViewOptions} from 'motion/react';
 
 export type InViewProps = {
   children: ReactNode;
@@ -18,6 +17,7 @@ export type InViewProps = {
   viewOptions?: UseInViewOptions;
   as?: React.ElementType;
   once?: boolean
+  className?: string; // <-- Add this line
 };
 
 const defaultVariants = {
@@ -31,6 +31,7 @@ export function InView({
   transition,
   viewOptions,
   as = 'div',
+  className,
   once
 }: InViewProps) {
   const ref = useRef(null);
@@ -51,6 +52,7 @@ export function InView({
 
       variants={variants}
       transition={transition}
+      className={className}
     >
       {children}
     </MotionComponent>

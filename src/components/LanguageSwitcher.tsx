@@ -1,6 +1,7 @@
 // src/components/LanguageSwitcher.tsx
 import { useRouter } from '@tanstack/react-router'
-import { locales, getLocale, setLocale, type Locale } from '../paraglide/runtime'
+import { locales, getLocale, setLocale  } from '../paraglide/runtime'
+import type {Locale} from '../paraglide/runtime';
 
 export function LanguageSwitcher() {
   const router = useRouter()

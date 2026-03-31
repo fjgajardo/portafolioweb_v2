@@ -1,4 +1,5 @@
-import { useState, type JSXElementConstructor, type Key, type ReactElement, type ReactNode, type ReactPortal, type SetStateAction } from 'react';
+import { useState       } from 'react';
+import type {JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, SetStateAction} from 'react';
 import { motion, AnimatePresence, MotionValue } from 'framer-motion';
 
 export type Project = {
@@ -22,10 +23,10 @@ export default function Gallery({ projects }: { projects: Project[] }) {
   const prevProject = () => setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
 
   return (
-    <div className="relative w-full h-screen bg-black text-white overflow-hidden font-sans">
+    <div className="h-full">
       
       {/* Global Header */}
-      <header className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-50 mix-blend-difference">
+      <header className="absolute top-0 left-0 w-full p-6  z-50 mix-blend-difference">
         <button 
           onClick={() => setView(view === 'grid' ? 'fullscreen' : 'grid')}
           className="uppercase text-xs tracking-widest hover:opacity-70 transition-opacity"
@@ -48,7 +49,7 @@ export default function Gallery({ projects }: { projects: Project[] }) {
         ) : (
           <FullscreenSlider 
             key="fullscreen" 
-            project={projects[currentIndex]} 
+            projects={projects}  
             onNext={nextProject} 
             onPrev={prevProject} 
             total={projects.length}
@@ -112,54 +113,111 @@ function GridView({
   );
 }
 
-function FullscreenSlider({ project, onNext, onPrev, total, index }) {
-  return (
-    <motion.div className="absolute inset-0 flex items-center justify-center w-full h-full">
-      <motion.div 
-        layoutId={`slug-${project.slug}`} 
-        className="w-full h-full bg-neutral-800 flex flex-col justify-end p-8 md:p-16 relative"
-      >
-        {/* ADD THE IMAGE HERE */}
-        {project.img0 && (
-          <motion.img
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          exit={{ opacity: 0 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 100, 
-            damping: 20, 
-            mass: 1 
-          }}
-            layoutId={`image-${project.slug}`}
-            src={project.img0}
-            alt={project.title}
-            className="absolute inset-0 w-full h-full object-cover z-0 opacity-60 will-change-transform" 
-          />
-        )}
-        {/* Playback / Next Prev Overlay */}
-        <div className="absolute inset-0 flex items-center justify-between px-6 z-20 mix-blend-difference pointer-events-none">
-          <button onClick={onPrev} className="uppercase tracking-widest text-sm pointer-events-auto hover:opacity-70">Prev</button>
-          <button onClick={onNext} className="uppercase tracking-widest text-sm pointer-events-auto hover:opacity-70">Next</button>
-        </div>
+function FullscreenSlider({ 
+  projects, 
+  onNext, 
+  onPrev, 
+  index 
+}: { 
+  projects: Project[];
+  onNext: () => void;
+  onPrev: () => void;
+  total: number;
+  index: number;
+}) {
+  // Grab only the last 5 projects
+  const sliderProjects = projects.slice(-5);
 
-        {/* Project Typography */}
-        <div className="relative z-10 flex justify-between items-end w-full">
-          <div className="flex flex-col">
-            <motion.h1 layoutId={`date-${project.slug}`} className="text-5xl md:text-8xl font-black uppercase tracking-tighter">
-              {project.date}
-            </motion.h1>
-            <motion.p layoutId={`title-${project.slug}`} className="text-xl md:text-3xl font-light mt-2">
-              {project.title}<span className="text-sm uppercase tracking-widest opacity-60">{project.goTo}</span>
-            </motion.p>
-          </div>
+  return (
+    <motion.div className=" inset-0 w-full h-full flex overflow-hidden">
+      
+      {/* Controls Overlay */}
+      <div className="absolute inset-x-0 bottom-10 md:inset-0 flex items-center justify-between px-6 z-50 mix-blend-difference pointer-events-none">
+        <button onClick={onPrev} className="uppercase tracking-widest text-sm pointer-events-auto hover:opacity-70 text-white">Prev</button>
+        <button onClick={onNext} className="uppercase tracking-widest text-sm pointer-events-auto hover:opacity-70 text-white">Next</button>
+      </div>
+
+      <AnimatePresence initial={false}>
+        {sliderProjects.map((p, i) => {
+          // Determine the state of each item relative to the current index
+          const isActive = i === index;
+          const isNext = i === index + 1;
           
-          {/* Index Tracker */}
-          <div className="hidden md:block text-3xl font-light mb-2">
-            0{index + 1}. <span className="text-lg opacity-50">/ 0{total}.</span>
-          </div>
-        </div>
-      </motion.div>
+          // If we are at the last item, let it take 100% width since there is no next item
+          const isLastActive = isActive && index === sliderProjects.length - 1;
+
+          let width = "0%";
+          let opacity = 0;
+
+          if (isActive) {
+            width = isLastActive ? "100%" : "60%";
+            opacity = 1;
+          } else if (isNext) {
+            width = "40%"; 
+            opacity = 1; // Keep opacity 1 so the image acts as a clear preview
+          }
+
+          // Don't render items that are totally out of view to keep the DOM clean
+          if (width === "0%") return null;
+
+          return (
+            <motion.div 
+              key={p.slug}
+              layoutId={`project-container-${p.slug}`}
+              initial={{ width: "0%", opacity: 0 }}
+              animate={{ width, opacity }}
+              exit={{ width: "0%", opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 25 }}
+              className="h-full relative overflow-hidden flex flex-col justify-end border-r border-white/10 shrink-0"
+            >
+              {/* Background Image */}
+              {p.img0 && (
+                <motion.img
+                  layoutId={`image-${p.slug}`}
+                  src={p.img0}
+                  alt={p.title}
+                  className="absolute inset-0 w-full h-full object-cover z-0 will-change-transform" 
+                  // Dim the "next" image slightly so the active one stands out
+                  animate={{ filter: isActive ? "brightness(1)" : "brightness(0.5)" }}
+                />
+              )}
+
+              {/* Gradient for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
+
+              {/* Typography - using min-w-[60vw] prevents text reflow/wrapping while width shrinks */}
+              <motion.div 
+                animate={{ opacity: isActive ? 1 : 0 }}
+                className="relative z-20 flex justify-between items-end min-w-[60vw] md:min-w-[100vw] p-8 md:p-16 text-white"
+              >
+                <div className="flex flex-col">
+                  <motion.h1 layoutId={`date-${p.slug}`} className="text-5xl md:text-8xl font-black uppercase tracking-tighter">
+                    {p.date}
+                  </motion.h1>
+                  <motion.p layoutId={`title-${p.slug}`} className="text-xl md:text-3xl font-light mt-2">
+                    {p.title}
+                    {p.goTo && <span className="text-sm uppercase tracking-widest opacity-60 ml-2">{p.goTo}</span>}
+                  </motion.p>
+                </div>
+                
+                {/* Index Tracker */}
+                <div className="hidden md:block text-3xl font-light mb-2">
+                  0{i + 1}. <span className="text-lg opacity-50">/ 0{sliderProjects.length}.</span>
+                </div>
+              </motion.div>
+
+              {/* Clickable overlay on the "Next" slice so users can just tap the image to advance */}
+              {isNext && (
+                <div 
+                  className="absolute inset-0 z-30 cursor-pointer" 
+                  onClick={onNext}
+                  title="Next Project"
+                />
+              )}
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </motion.div>
   );
 }
