@@ -8,6 +8,7 @@ import {
   CarouselContent,
   CarouselNavigation,
   CarouselItem,
+  useCarousel,
 } from '../../components/motion-primitives/carousel';
 
 export type LocalizedString = {
@@ -136,6 +137,58 @@ function GridView({
   );
 }
 
+// 1. Create a new sub-component for the slide
+function ProjectSlide({ 
+  project, 
+  itemIndex, 
+  currentLang 
+}: { 
+  project: Project; 
+  itemIndex: number; 
+  currentLang: 'es' | 'en'; 
+}) {
+  // Grab the current active index from your carousel context
+  const { index: activeIndex } = useCarousel();
+  const isActive = activeIndex === itemIndex;
+
+  return (
+    <CarouselItem className='h-full w-5/6 relative overflow-visible'>
+      {/* Image: 
+        Needs 'relative' and a higher z-index (z-10) to sit above the content box. 
+      */}
+      <motion.img
+        layoutId={`image-${project.slug}`}
+        src={project.img0}
+        alt={project.title[currentLang]}
+        className="relative z-10 w-full h-full object-cover cursor-grab" 
+        animate={{ filter: isActive ? "brightness(1)" : "brightness(0.4)" }}
+      />
+      
+      {/* contenidoCarrusel: 
+        Needs a lower z-index (z-0) and absolute positioning. 
+        Because we added overflow-visible to CarouselItem, the -left-1/3 will render properly.
+      */}
+      <motion.div 
+        animate={{ opacity: isActive ? 1 : 0 }}
+        className="contenidoCarrusel absolute -left-1/3 top-2/15 w-full h-4/5 border-1 border-outline-variant z-0 pointer-events-none"
+      >
+        <div className="flex flex-col w-1/3 p-2 pointer-events-auto">
+          <motion.h1 layoutId={`date-${project.slug}`} className="uppercase text-on-surface-variant font-body label-small">
+            {project.date}
+          </motion.h1>
+          <motion.p layoutId={`title-${project.slug}`} className="title-large font-display text-on-surface">
+            {project.title[currentLang]}
+          </motion.p>
+          <motion.p layoutId={`description-${project.slug}`} className="mt-2 body-small font-body text-on-surface-variant">
+            {project.content[currentLang]}
+          </motion.p>
+        </div>
+      </motion.div>
+    </CarouselItem>
+  );
+}
+
+// 2. Update your FullscreenSlider to map the new ProjectSlide
 function FullscreenSlider({ 
   projects, 
   index,
@@ -145,24 +198,57 @@ function FullscreenSlider({
   index: number;
   currentLang: 'es' | 'en';
 }) {
+  // Track the active index locally so the text component can react to it
+  const [activeIndex, setActiveIndex] = useState(index);
+
   return (
     <div className='relative h-full w-full'>
-      {/* ADD initialIndex={index} HERE */}
-      <Carousel initialIndex={index}>
+      
+      {/* 1. DECOUPLED TEXT COMPONENT */}
+      {/* Sits outside the Carousel, so it ignores the overflow-hidden */}
+      <div className="absolute -left-1/5 top-2/15 w-1/3 h-4/5 z-0 border-1 border-outline-variant z-0 overflow-auto pointer-events-none">
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={activeIndex}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col w-full p-2 pointer-events-auto "
+          >
+            <h1 className="uppercase text-on-surface-variant font-body label-small">
+              {projects[activeIndex].date}
+            </h1>
+            <p className="title-large font-display text-on-surface">
+              {projects[activeIndex].title[currentLang]}
+            </p>
+            <p className="mt-2 body-small font-body text-on-surface-variant">
+              {projects[activeIndex].content[currentLang]}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* 2. THE CAROUSEL */}
+      <Carousel 
+        initialIndex={index} 
+        onIndexChange={setActiveIndex} // Syncs the scroll with our text state
+        className="h-full w-full"
+      >
         <CarouselContent className='gap-10 h-full'>
-          {projects.map((p) => {
-            return (
-              <CarouselItem key={p.slug} className='h-full w-5/6'>
-                  <motion.img
-                      layoutId={`image-${p.slug}`}
-                      src={p.img0}
-                      alt={p.title[currentLang]}
-                      className="w-full h-full object-cover z-50 cursor-grab" 
-                    />
-                    
-              </CarouselItem>
-            )
-          })}
+          {projects.map((p, i) => (
+            <CarouselItem key={p.slug} className='h-full w-5/6'>
+                <motion.img
+                  layoutId={`image-${p.slug}`}
+                  src={p.img0}
+                  alt={p.title[currentLang]}
+                  className="w-full h-full object-cover cursor-grab" 
+                  // Dim the inactive images
+                  animate={{ filter: activeIndex === i ? "brightness(1)" : "brightness(0.4)" }}
+                  transition={{ duration: 0.3 }}
+                />
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselNavigation
           alwaysShow
@@ -170,6 +256,7 @@ function FullscreenSlider({
           classNameButtonRight={m.gallery_nav_right()}
         />
       </Carousel>
+      
     </div>
   );
 }
