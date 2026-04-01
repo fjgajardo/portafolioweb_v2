@@ -1,19 +1,14 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Lexend:wght@100..900&family=Sen:wght@400..800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Sen:wght@400..800&display=swap');
 @import "tailwindcss";
-
 @import "tw-animate-css";
-
 @import "shadcn/tailwind.css";
-
 @import "@fontsource-variable/geist";
-
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sen";
   --font-mono: "Doto";
   --color-primary: rgb(0, 105, 113);
@@ -39,6 +34,9 @@
   --list-surface-container: 233,239,240;
   --color-surface-container-high: #E3E9EA;
   --color-surface-container-highest: #DEE4E4;
+  --color-gradient-warm: #ff6a2a;
+  
+  --opacity-background-gradient: 0.05;
 
   --drop-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30);
   --drop-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.30);
@@ -74,6 +72,12 @@
   --list-surface-container: 26,33,33;
   --color-surface-container-high: #252B2C;
   --color-surface-container-highest: #303637;
+  --color-gradient-warm: #ff6a2a;
+
+  --opacity-background-gradient: 0.20;
+
+
+  
   --drop-shadow-1: 0 1px 3px rgba(129, 211, 221, 0.15);
   --drop-shadow-2: 0 2px 6px rgba(129, 211, 221, 0.15);
   --drop-shadow-3: 0 4px 8px rgba(129, 211, 221, 0.15);
@@ -85,6 +89,77 @@
 * {
   box-sizing: border-box;
 }
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-wrap {
+  width: min(1080px, calc(100% - 2rem));
+  margin-inline: 10vw;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gradient-background {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: -500;
+
+
+
+  background: 
+    radial-gradient(circle at 20% 30%, var(--color-gradient-warm) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, var(--color-primary) 0%, transparent 45%),
+    radial-gradient(circle at 70% 70%, var(--color-gradient-warm) 0%, transparent 50%),
+    radial-gradient(circle at 30% 80%, #1a2a6c 0%, transparent 50%),
+    #0b0b0b; /* base dark background */
+  
+  background-blend-mode: screen;
+
+  filter: blur(100px); /* Massive blur for softness */
+  transform: scale(1.2); /* To hide blur artifacts at the edges */
+  opacity: var(--opacity-background-gradient);
+}
+
+.glass_effect {
+  background-color: rgba(var(--list-surface-container), 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(var(--list-outline), 0.60);
+}
+
+.glass_effect_rect {
+  background-color: rgba(var(--list-surface-container), 0.9);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(var(--list-outline), 0.60);
+}
+
+
 
 /* DISPLAY */
 .display-large {
@@ -157,7 +232,7 @@
 }
 
 .body-small {
-  font-size: 0.75.rem;
+  font-size: 0.75rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1rem; /* 133.333% */
@@ -209,62 +284,4 @@
   font-weight: 500;
   line-height: 1.25rem; /* 142.857% */
   letter-spacing: 0.1px;
-}
-
-html,
-body,
-#app {
-  min-height: 100%;
-}
-
-body {
-  margin: 0;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.page-wrap {
-  width: min(1080px, calc(100% - 2rem));
-  margin-inline: 10vw;
-}
-
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.gradient-background {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-
-  /* Layering multiple radial gradients */
-  background:
-    radial-gradient(circle at 80% 20%, rgba(255, 160, 100, 0.4) 0%, rgba(0,0,0,0) 60%), /* Main Warm 1 */
-    radial-gradient(circle at 80% 80%, rgba(100, 180, 255, 0.3) 0%, rgba(0,0,0,0) 50%), /* Sub Cool 1 */
-    radial-gradient(ellipse at 40% 60%, rgba(255, 200, 150, 0.2) 0%, rgba(0,0,0,0) 70%), /* Center Glow */
-    radial-gradient(circle at 20% 90%, rgba(200, 200, 255, 0.1) 0%, rgba(0,0,0,0) 40%); /* Sub Cool 2 */
-
-  /* Key effects to make it soft and organic */
-  background-blend-mode: hard-light; /* Essential for mixing the colors */
-  filter: blur(100px); /* Massive blur for softness */
-  transform: scale(1.2); /* To hide blur artifacts at the edges */
-  opacity: 0.25;
-}
-
-.glass_effect {
-  background-color: rgba(var(--list-surface-container), 0.8);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(var(--list-outline), 0.60);
-
 }

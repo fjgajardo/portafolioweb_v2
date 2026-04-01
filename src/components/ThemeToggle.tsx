@@ -41,6 +41,7 @@ export default function ThemeToggle() {
   }, [])
 
   function toggleMode() {
+    console.log("test")
     const nextMode: ThemeMode = mode === 'light' ? 'dark' : 'light'
     setMode(nextMode)
     applyThemeMode(nextMode)
@@ -55,7 +56,6 @@ export default function ThemeToggle() {
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      // Removed the static text color to allow the icons to dictate their own colors
       className="flex items-center justify-center rounded-full bg-[var(--chip-bg)] p-2 shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
     >
       {!mounted ? (

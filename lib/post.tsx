@@ -3,17 +3,30 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import matter from 'gray-matter'
 
+
+export type LocalizedString = {
+  es: string;
+  en: string;
+};
 // Define the shape of your parsed data
 export type Project = {
   slug: string;
-  title: string;
   date: string;
-  content: string;
-  leyendaBoton: string;
   goTo: string;
-  img1: string;
   img0: string;
+  img1: string;
   img2: string;
+  img3: string;
+  img4: string;
+  img5: string;
+
+  tags: LocalizedString;
+  title: LocalizedString;
+  shortDescription: LocalizedString;
+  content: LocalizedString;
+  leyendaBoton: LocalizedString;
+
+  
 }
 
 
@@ -119,18 +132,25 @@ export const getProjects = createServerFn({ method: 'GET' })
         const fileContents = await fs.readFile(filePath, 'utf8')
         
         // Parse the frontmatter and the body
-        const { data, content } = matter(fileContents)
+        const { data } = matter(fileContents)
         
         return {
           slug: filename.replace(/\.md$/, ''), // Remove .md for the URL
-          title: data.title,
           date: data.date,
-          content: content,
-          leyendaBoton: data.leyendaBoton,
           goTo: data.goTo,
           img0: data.img0,
           img1: data.img1,
           img2: data.img2,
+          img3: data.img3,
+          img4: data.img4,
+          img5: data.img5,
+
+          tags: { es: data.tags.es, en: data.tags.en },
+          title: { es: data.title.es, en: data.title.en },
+          shortDescription: { es: data.shortDescription.es, en: data.shortDescription.en },
+          content: { es: data.content.es, en: data.content.en },
+          leyendaBoton: { es: data.leyendaBoton.es, en: data.leyendaBoton.en },
+
         }
       })
     )

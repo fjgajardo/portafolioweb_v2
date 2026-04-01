@@ -1,10 +1,10 @@
 ---
-slug: delRio2
+slug: delRio3
 date: 2025
 goTo: https://www.drconsultores.cl/
-img0: /delRio/delRio3.png
-img1: /delRio/delRio1.png
-img2: /delRio/delRio2.png
+img0: /delRio/delRio2.png
+img1: /delRio/delRio3.png
+img2: /delRio/delRio1.png
 img3: /delRio/delRio3.png
 img4: /delRio/delRio3.png
 img5: /delRio/delRio3.png

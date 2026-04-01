@@ -39,8 +39,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <div className='gradient-background'></div>
+      
       <body className="font-body antialiased bg-surface [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+        <div className='gradient-background'></div>
         <NavPill />
         <Header/>
         {children}
