@@ -1,89 +1,85 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Sen:wght@400..800&display=swap');
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Sen";
-  --font-mono: "Doto";
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sen';
+  --font-mono: 'Doto';
   --color-primary: rgb(0, 105, 113);
   --color-on-primary: rgb(255, 255, 255);
   --color-secondary: rgb(74, 99, 102);
-  --color-on-secondary: #FFFFFF;
-  --color-on-surface: #161D1D;
-  --color-on-surface-variant: #3F484A;
+  --color-on-secondary: #ffffff;
+  --color-on-surface: #161d1d;
+  --color-on-surface-variant: #3f484a;
   --color-outline: rgb(111, 121, 122);
-  --list-outline: 111,121,122;
+  --list-outline: 111, 121, 122;
   --color-outline-variant: rgb(190, 200, 201);
-  --list-outline: 190,200,201;
-  --color-primary-container: #9DF0FA;
-  --color-on-primary-container: #004F55;
-  --color-secondary-container: #CDE7EB;
-  --color-on-secondary-container: #324B4E;
-  --color-background: #F5FAFB;
+  --list-outline: 190, 200, 201;
+  --color-primary-container: #9df0fa;
+  --color-on-primary-container: #004f55;
+  --color-secondary-container: #cde7eb;
+  --color-on-secondary-container: #324b4e;
+  --color-background: #f5fafb;
   --color-surface: rgb(245, 250, 251);
-  --color-surface-variant: #DAE4E5;
-  --color-surface-container-lowest: #FFFFFF;
-  --color-surface-container-low: #EFF5F5;
+  --color-surface-variant: #dae4e5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff5f5;
   --color-surface-container: rgb(233, 239, 240);
-  --list-surface-container: 233,239,240;
-  --color-surface-container-high: #E3E9EA;
-  --color-surface-container-highest: #DEE4E4;
+  --list-surface-container: 233, 239, 240;
+  --color-surface-container-high: #e3e9ea;
+  --color-surface-container-highest: #dee4e4;
   --color-gradient-warm: #ff6a2a;
-  
+
   --opacity-background-gradient: 0.05;
 
-  --drop-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.30);
-  --drop-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --drop-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --drop-shadow-2: 0 1px 2px rgba(0, 0, 0, 0.3);
   --drop-shadow-3: 0 4px 8px rgba(0, 0, 0, 0.15);
   --drop-shadow-4: 0 6px 10px rgba(0, 0, 0, 0.15);
   --drop-shadow-5: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 .dark {
-  --font-body: "Lexend", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Sen";
-  --font-mono: "Doto";
+  --font-body: 'Lexend', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sen';
+  --font-mono: 'Doto';
   --color-primary: rgb(129, 211, 221);
-  --color-on-primary: #00363B;
-  --color-secondary: #B1CBCF;
-  --color-on-secondary: #1C3437;
+  --color-on-primary: #00363b;
+  --color-secondary: #b1cbcf;
+  --color-on-secondary: #1c3437;
   --color-on-surface: #dee4e4;
-  --color-on-surface-variant: #BEC8C9;
+  --color-on-surface-variant: #bec8c9;
   --color-outline: rgb(137, 146, 148);
-  --list-outline: 137,146,148;
+  --list-outline: 137, 146, 148;
   --color-outline-variant: rgb(63, 72, 74);
-  --list-outline: 63,72,74;
-  --color-primary-container: #004F55;
-  --color-on-primary-container: #9DF0FA;
-  --color-secondary-container: #324B4E;
-  --color-on-secondary-container: #CDE7EB;
-  --color-background: #0E1415;
+  --list-outline: 63, 72, 74;
+  --color-primary-container: #004f55;
+  --color-on-primary-container: #9df0fa;
+  --color-secondary-container: #324b4e;
+  --color-on-secondary-container: #cde7eb;
+  --color-background: #0e1415;
   --color-surface: rgb(14, 20, 21);
   --color-surface-variant: #3f484a;
-  --color-surface-container-lowest: #090F10;
-  --color-surface-container-low: #161D1D;
+  --color-surface-container-lowest: #090f10;
+  --color-surface-container-low: #161d1d;
   --color-surface-container: rgb(26, 33, 33);
-  --list-surface-container: 26,33,33;
-  --color-surface-container-high: #252B2C;
+  --list-surface-container: 26, 33, 33;
+  --color-surface-container-high: #252b2c;
   --color-surface-container-highest: #303637;
   --color-gradient-warm: #ff6a2a;
 
-  --opacity-background-gradient: 0.20;
+  --opacity-background-gradient: 0.2;
 
-
-  
   --drop-shadow-1: 0 1px 3px rgba(129, 211, 221, 0.15);
   --drop-shadow-2: 0 2px 6px rgba(129, 211, 221, 0.15);
   --drop-shadow-3: 0 4px 8px rgba(129, 211, 221, 0.15);
   --drop-shadow-4: 0 6px 10px rgba(129, 211, 221, 0.15);
   --drop-shadow-5: 0 8px 12px rgba(129, 211, 221, 0.15);
-
 }
 
 * {
@@ -121,20 +117,31 @@ body {
 
 .gradient-background {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: -500;
 
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      var(--color-gradient-warm) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      var(--color-primary) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      var(--color-gradient-warm) 0%,
+      transparent 50%
+    ),
+    radial-gradient(circle at 30% 80%, #1a2a6c 0%, transparent 50%), #0b0b0b; /* base dark background */
 
-
-  background: 
-    radial-gradient(circle at 20% 30%, var(--color-gradient-warm) 0%, transparent 40%),
-    radial-gradient(circle at 80% 20%, var(--color-primary) 0%, transparent 45%),
-    radial-gradient(circle at 70% 70%, var(--color-gradient-warm) 0%, transparent 50%),
-    radial-gradient(circle at 30% 80%, #1a2a6c 0%, transparent 50%),
-    #0b0b0b; /* base dark background */
-  
   background-blend-mode: screen;
 
   filter: blur(100px); /* Massive blur for softness */
@@ -148,7 +155,7 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(var(--list-outline), 0.60);
+  border: 1px solid rgba(var(--list-outline), 0.6);
 }
 
 .glass_effect_rect {
@@ -156,10 +163,8 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(var(--list-outline), 0.60);
+  border: 1px solid rgba(var(--list-outline), 0.6);
 }
-
-
 
 /* DISPLAY */
 .display-large {

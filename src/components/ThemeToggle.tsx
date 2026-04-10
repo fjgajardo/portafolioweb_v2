@@ -7,7 +7,7 @@ type ThemeMode = 'light' | 'dark'
 function getInitialMode(): ThemeMode {
   // Safe fallback for Server-Side Rendering
   if (typeof window === 'undefined') {
-    return 'light' 
+    return 'light'
   }
 
   // 1. Check if the user has a saved preference
@@ -17,7 +17,9 @@ function getInitialMode(): ThemeMode {
   }
 
   // 2. If no saved preference, default to system preference immediately
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light'
 }
 
 function applyThemeMode(mode: ThemeMode) {
@@ -41,7 +43,6 @@ export default function ThemeToggle() {
   }, [])
 
   function toggleMode() {
-    console.log("test")
     const nextMode: ThemeMode = mode === 'light' ? 'dark' : 'light'
     setMode(nextMode)
     applyThemeMode(nextMode)
@@ -56,16 +57,14 @@ export default function ThemeToggle() {
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      className="flex items-center justify-center rounded-full bg-[var(--chip-bg)] p-2 shadow-[0_8px_22px_rgba(30,90,72,0.08)] transition hover:-translate-y-0.5"
+      className="flex items-center justify-center rounded-full bg-[var(--chip-bg)] p-2  transition hover:-translate-y-0.5 cursor-pointer"
     >
       {!mounted ? (
         <span className="h-5 w-5 opacity-0" />
       ) : mode === 'light' ? (
         <Moon className="h-5 w-5 text-indigo-400" strokeWidth={2} />
-        
       ) : (
         <Sun className="h-5 w-5 text-amber-200" strokeWidth={2} />
-        
       )}
     </button>
   )
