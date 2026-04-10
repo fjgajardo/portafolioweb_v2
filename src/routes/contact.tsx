@@ -10,8 +10,8 @@ export const Route = createFileRoute('/contact')({
 
 function RouteComponent() {
   return (
-    <main className="w-full min-h-screen flex flex-col py-24">
-      <section className="h-3/7 flex items-end mx-50 px-10">
+    <main className="flex flex-row py-24 align-center mx-50 gap-10 ">
+      <div className="flex flex-col gap-20 w-3/7 ">
         <InView
           variants={{
             hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },
@@ -27,9 +27,6 @@ function RouteComponent() {
             {m.contact_lead()}
           </p>
         </InView>
-      </section>
-
-      <section className="mt-20 flex gap-10 mx-50 px-10">
         <InView
           variants={{
             hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },
@@ -37,23 +34,23 @@ function RouteComponent() {
           }}
           viewOptions={{ margin: '0px 0px 0px 0px' }}
           transition={{ duration: 1, ease: 'easeInOut' }}
-          className="h-full w-2/4"
         >
           <ContactInfo />
         </InView>
+      </div>
 
+      <div className="w-4/7">
         <InView
           variants={{
             hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },
             visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
           }}
-          viewOptions={{ margin: '0px 0px 0px 0px' }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-          className="h-full w-2/4"
+          viewOptions={{ margin: '0px 0px -200px 0px' }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
         >
           <ContactForm />
         </InView>
-      </section>
+      </div>
     </main>
   )
 }

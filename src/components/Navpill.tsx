@@ -25,7 +25,7 @@ export function NavPill() {
 
   return (
     <div className="fixed inset-y-0 left-0 flex items-center m-10 z-200">
-      <div className="flex flex-col rounded-xl gap-1  p-2 glass_effect">
+      <div className="flex flex-col  gap-1  p-2 glass_effect">
         <AnimatedBackground
           className="rounded-lg bg-surface-container-highest"
           transition={{

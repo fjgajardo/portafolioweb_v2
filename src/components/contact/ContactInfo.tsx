@@ -7,7 +7,7 @@ export const ContactInfo = () => {
         <p className="font-mono text-primary label-large">
           {m.contact_info_email()}
         </p>
-        <h1 className="display-medium font-display text-on-surface">
+        <h1 className="display-small font-display text-on-surface">
           fjgajardo@uc.cl
         </h1>
       </div>
@@ -17,7 +17,7 @@ export const ContactInfo = () => {
           <p className="font-mono text-primary label-medium">
             {m.contact_info_phone()}
           </p>
-          <h1 className="headline-medium font-display text-on-surface">
+          <h1 className="headline-small font-display text-on-surface">
             +56977092131
           </h1>
         </div>

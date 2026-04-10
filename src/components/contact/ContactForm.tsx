@@ -63,7 +63,7 @@ export default function ContactForm() {
         e.stopPropagation()
         form.handleSubmit()
       }}
-      className="flex flex-col gap-2 border-1 border-outline-variant p-5 border-dashed"
+      className="flex flex-col gap-2 glass_effect p-10"
     >
       <form.Field
         name="name"
