@@ -11,7 +11,10 @@ export const Route = createFileRoute('/contact')({
 function RouteComponent() {
   return (
     <main className="flex flex-row py-24 align-center mx-50 gap-10 ">
-      <div className="flex flex-col gap-20 w-3/7 ">
+      <div className="fixed top-0 bottom-0 right-1/3 border-l border-dashed border-outline-variant -z-10"></div>
+      <div className="fixed top-0 bottom-0 right-1/5 border-l border-dashed border-outline-variant -z-10"></div>
+      <div className="fixed top-0 bottom-0 right-1/6 border-l border-dashed border-outline-variant -z-10"></div>
+      <div className="flex flex-col gap-15 w-3/7 ">
         <InView
           variants={{
             hidden: { opacity: 0, y: 100, filter: 'blur(4px)' },

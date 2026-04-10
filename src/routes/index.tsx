@@ -17,6 +17,7 @@ function App() {
 
   return (
     <main className=" h-screen w-screen flex flex-col justify">
+      <div className="fixed top-0 bottom-0 right-3/7 border-l border-dashed border-outline-variant -z-10"></div>
       <div className="h-3/7 flex items-end page-wrap px-10">
         <section className="intro">
           <InView

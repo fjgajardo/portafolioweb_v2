@@ -57,119 +57,124 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
-      }}
-      className="flex flex-col gap-2 glass_effect p-10"
-    >
-      <form.Field
-        name="name"
-        validators={{
-          onChange: ({ value }) => (!value ? 'Name is required' : undefined),
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
         }}
-        children={(field) => (
-          <div>
-            <label
-              className="font-display label-medium text-on-surface-variant"
-              htmlFor={field.name}
-            >
-              {m.contact_form_name()}
-            </label>
-            <input
-              id={field.name}
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              onBlur={field.handleBlur}
-              className="border border-outline-variant p-1 w-full"
-            />
-            {field.state.meta.errors && (
-              <span style={{ color: 'red', fontSize: '0.8rem' }}>
-                {field.state.meta.errors.join(', ')}
-              </span>
-            )}
-          </div>
-        )}
-      />
-
-      <form.Field
-        name="email"
-        validators={{
-          onChange: ({ value }) =>
-            !value
-              ? 'Email is required'
-              : !/^\S+@\S+\.\S+$/.test(value)
-                ? 'Invalid email format'
-                : undefined,
-        }}
-        children={(field) => (
-          <div>
-            <label
-              className="font-display label-medium text-on-surface-variant"
-              htmlFor={field.name}
-            >
-              {m.contact_form_email()}
-            </label>
-            <input
-              id={field.name}
-              type="email"
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              onBlur={field.handleBlur}
-              className="border border-outline-variant p-1 w-full"
-            />
-            {field.state.meta.errors && (
-              <span style={{ color: 'red', fontSize: '0.8rem' }}>
-                {field.state.meta.errors.join(', ')}
-              </span>
-            )}
-          </div>
-        )}
-      />
-
-      <form.Field
-        name="message"
-        validators={{
-          onChange: ({ value }) => (!value ? 'Message is required' : undefined),
-        }}
-        children={(field) => (
-          <div>
-            <label
-              className="font-display label-medium text-on-surface-variant"
-              htmlFor={field.name}
-            >
-              {m.contact_form_body()}
-            </label>
-            <textarea
-              id={field.name}
-              value={field.state.value}
-              onChange={(e) => field.handleChange(e.target.value)}
-              onBlur={field.handleBlur}
-              rows={4}
-              className="border border-outline-variant p-1 w-full"
-            />
-            {field.state.meta.errors && (
-              <span style={{ color: 'red', fontSize: '0.8rem' }}>
-                {field.state.meta.errors.join(', ')}
-              </span>
-            )}
-          </div>
-        )}
-      />
-
-      {status === 'error' && (
-        <p style={{ color: 'red' }}>Something went wrong. Please try again.</p>
-      )}
-
-      <button
-        type="submit"
-        disabled={status === 'submitting'}
-        className="bg-primary-container p-1 w-1/4 self-end"
+        className="flex flex-col gap-2 glass_effect p-10"
       >
-        {status === 'submitting' ? 'Sending...' : 'Submit'}
-      </button>
-    </form>
+        <form.Field
+          name="name"
+          validators={{
+            onChange: ({ value }) => (!value ? 'Name is required' : undefined),
+          }}
+          children={(field) => (
+            <div>
+              <label
+                className="font-display label-medium text-on-surface-variant"
+                htmlFor={field.name}
+              >
+                {m.contact_form_name()}
+              </label>
+              <input
+                id={field.name}
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                onBlur={field.handleBlur}
+                className="border border-outline-variant p-1 w-full"
+              />
+              {field.state.meta.errors && (
+                <span style={{ color: 'red', fontSize: '0.8rem' }}>
+                  {field.state.meta.errors.join(', ')}
+                </span>
+              )}
+            </div>
+          )}
+        />
+
+        <form.Field
+          name="email"
+          validators={{
+            onChange: ({ value }) =>
+              !value
+                ? 'Email is required'
+                : !/^\S+@\S+\.\S+$/.test(value)
+                  ? 'Invalid email format'
+                  : undefined,
+          }}
+          children={(field) => (
+            <div>
+              <label
+                className="font-display label-medium text-on-surface-variant"
+                htmlFor={field.name}
+              >
+                {m.contact_form_email()}
+              </label>
+              <input
+                id={field.name}
+                type="email"
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                onBlur={field.handleBlur}
+                className="border border-outline-variant p-1 w-full"
+              />
+              {field.state.meta.errors && (
+                <span style={{ color: 'red', fontSize: '0.8rem' }}>
+                  {field.state.meta.errors.join(', ')}
+                </span>
+              )}
+            </div>
+          )}
+        />
+
+        <form.Field
+          name="message"
+          validators={{
+            onChange: ({ value }) =>
+              !value ? 'Message is required' : undefined,
+          }}
+          children={(field) => (
+            <div>
+              <label
+                className="font-display label-medium text-on-surface-variant"
+                htmlFor={field.name}
+              >
+                {m.contact_form_body()}
+              </label>
+              <textarea
+                id={field.name}
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+                onBlur={field.handleBlur}
+                rows={4}
+                className="border border-outline-variant p-1 w-full"
+              />
+              {field.state.meta.errors && (
+                <span style={{ color: 'red', fontSize: '0.8rem' }}>
+                  {field.state.meta.errors.join(', ')}
+                </span>
+              )}
+            </div>
+          )}
+        />
+
+        {status === 'error' && (
+          <p style={{ color: 'red' }}>
+            Something went wrong. Please try again.
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={status === 'submitting'}
+          className="border-1 border-primary text-primary p-1 w-1/4 self-end"
+        >
+          {status === 'submitting' ? 'Sending...' : 'Submit'}
+        </button>
+      </form>
+    </div>
   )
 }

@@ -41,7 +41,7 @@ function About() {
 
       {/* THE LINE: Starts at the top of this div (start of Experience) and goes to the bottom */}
       {/* md:left-1/4 positions it 25% from the left, acting as the visual indent border */}
-      <div className="fixed top-0 bottom-0 left-1/3 border-l border-outline-variant -z-10"></div>
+      <div className="fixed top-0 bottom-0 left-1/3 border-l border-outline-variant -z-10 border-dashed"></div>
 
       {/* 2. EXPERIENCE: Indented via the parent wrapper */}
       <section className="ml-[33.333333%] mt-10">
