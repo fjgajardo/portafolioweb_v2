@@ -8,6 +8,7 @@ import useMeasure from 'react-use-measure'
 import { AnimatePresence, motion, MotionConfig } from 'motion/react'
 import { cn } from '@/lib/utils'
 import useClickOutside from '../../hooks/useClickOutside'
+import * as m from '../paraglide/messages'
 
 const contact = {
   id: 2,
@@ -15,17 +16,46 @@ const contact = {
   to: '',
   icon: <PhoneCall className="h-5 w-5" />,
   content: (
-    <div className="flex flex-col space-y-4">
-      <div className="flex flex-col space-y-1 text-zinc-700">
-        <div className="h-8 w-8 rounded-full bg-linear-to-br from-blue-500 to-blue-400" />
-        <span>Ibelick</span>
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-row gap-10">
+        <div>
+          <p className="font-mono text-primary label-large">
+            {m.contact_info_email()}
+          </p>
+          <h1 className="display-small font-body text-on-surface">
+            fjgajardo@uc.cl
+          </h1>
+        </div>
+        <div>
+          <img
+            src="../../public/qr.png"
+            alt="QR code"
+            className="object-cover h-25 opacity-80"
+          />
+        </div>
       </div>
-      <button
-        className="relative h-8 w-full scale-100 select-none appearance-none items-center justify-center rounded-lg border border-zinc-950/10 px-2 text-sm text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]"
-        type="button"
-      >
-        Edit Profile
-      </button>
+
+      <div className="flex flex-row gap-10">
+        <div>
+          <p className="font-mono text-primary label-medium">
+            {m.contact_info_phone()}
+          </p>
+          <h1 className="headline-small font-body text-on-surface">
+            +56977092131
+          </h1>
+        </div>
+        <div>
+          <p className="font-mono text-primary label-medium">
+            {m.contact_info_linkedin()}
+          </p>
+          <a
+            href="https://www.linkedin.com/in/fernando-gajardo/"
+            className="headline-medium font-body text-secondary underline"
+          >
+            Perfil de LinkedIn
+          </a>
+        </div>
+      </div>
     </div>
   ),
 }
@@ -112,13 +142,15 @@ export function NavPill() {
               ))}
             </AnimatedBackground>
 
-            <div className="inline-flex h-10 w-10 items-center justify-center transition-colors duration-100 hover:text-on-surface hover:rounded-lg">
+            <div className="inline-flex h-10 w-10 items-center justify-center transition-colors duration-100 hover:text-on-surface hover:rounded-lg ">
               <button
                 key={contact.id}
                 aria-label={contact.label}
                 className={cn(
-                  'relative flex h-9 w-9 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 focus-visible:ring-2 active:scale-[0.98]',
-                  active === contact.id ? 'bg-zinc-100 text-zinc-800' : '',
+                  'relative flex h-9 w-9 shrink-0 scale-100 select-none appearance-none items-center justify-center rounded-lg text-on-surface transition-colors hover:surface-container-highest hover:text-on-surface focus-visible:ring-2 cursor-pointer ',
+                  active === contact.id
+                    ? 'bg-surface-container-high text-primary'
+                    : '',
                 )}
                 type="button"
                 onClick={() => {
@@ -151,10 +183,7 @@ export function NavPill() {
                 className="overflow-hidden ml-2 z-0"
               >
                 {/* Apply glass_effect to the panel. w-max ensures useMeasure reads the true width */}
-                <div
-                  ref={contentRef}
-                  className="glass_effect p-4 w-max rounded-xl"
-                >
+                <div ref={contentRef} className="glass_effect p-5 w-max ">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

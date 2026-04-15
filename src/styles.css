@@ -45,7 +45,7 @@
 }
 
 .dark {
-  --font-body: 'Lexend', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Sen';
   --font-mono: 'Doto';
   --color-primary: rgb(129, 211, 221);
