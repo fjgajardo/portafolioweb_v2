@@ -8,10 +8,16 @@ img2: /delRio/delRio2.png
 img3: /delRio/delRio3.png
 img4: /delRio/delRio3.png
 img5: /delRio/delRio3.png
+img0_dark: /delRio/delRio1_dark.png
+img1_dark: /delRio/delRio2_dark.png
+img2_dark: /delRio/delRio3_dark.png
+img3_dark: /delRio/delRio3_dark.png
+img4_dark: /delRio/delRio3_dark.png
+img5_dark: /delRio/delRio3_dark.png
 
 tags:
-    es: sitioweb, ux, personal
-    en: sitioweb, ux, personal
+    es: sitioweb
+    en: sitioweb
 title:
     es: sitio web Del Rio Consultores2
     en: Del Rio Consultores Website2

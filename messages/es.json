@@ -1,35 +1,29 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-
   "intro_title": "Diseñador",
   "intro_title_options": "Integral",
   "intro_title_options_1": "UX/UI",
   "intro_title_options_2": "Entretención y Gamificación",
   "intro_aboutme": "Como Diseñador Integral, mi enfoque es acercar diseño y código. He trabajado en roles como Product Designer o UX/UI liderando proyectos asegurando que la experiencia del usuario sea tan atractiva como viable de desarrollar. Combino dominio avanzado de Figma con bases en programación y gestión ágil (Scrum/Shape Up) para lograr entregas eficientes y de alto valor.",
-
+  "gallery_button_details": "Ver detalles",
   "gallery_title": "Todos los proyectos",
   "gallery_nav_left": "Ant",
   "gallery_nav_right": "Sig",
-
   "about_title": "Sobre mi",
   "about_intro": "Como diseñador, mi proceso creativo se nutre directamente de mis intereses. Me apasiona el diseño de interacciones y cómo este se conecta con el desarrollo de mecánicas de juego, algo que aploro tanto en videojuegos como en juegos de mesa. Además, disfruto llevar lo digital al mundo físico a través de la impresión 3D y la fabricación con Cricut. Estos intereses me dan una visión más amplia: me ayudan a entender mejor cómo las personas interactúan con los productos y me permiten diseñar experiencias mucho más ricas, inmersivas y táctiles.",
   "about_experience_title": "Últimos cargos",
   "about_education_title": "Educación",
-
   "contact_title": "Conversemos",
   "contact_lead": "Abierto a nuevas oportunidades de trabajo, proyectos conjuntos y colaboraciones freelance",
-
   "contact_info_email": "email",
   "contact_info_phone": "telefono",
   "contact_info_linkedin": "linkedIn",
-
   "contact_form_name": "Nombre",
   "contact_form_email": "Email",
   "contact_form_body": "Mensaje",
-
   "contact_form_button_1": "Enviar",
   "contact_form_button_2": "Enviando",
   "contact_form_button_3": "Enviado",
-
-  "contact_form_confirmation_message": "¡Gracias por contactarte!"
+  "contact_form_confirmation_message": "¡Gracias por contactarte!",
+  "project_back_to_home": "Volver al inicio"
 }

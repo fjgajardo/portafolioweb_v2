@@ -18,6 +18,12 @@ export type Project = {
   img3: string
   img4: string
   img5: string
+  img0_dark: string
+  img1_dark: string
+  img2_dark: string
+  img3_dark: string
+  img4_dark: string
+  img5_dark: string
 
   tags: LocalizedString
   title: LocalizedString
@@ -192,6 +198,12 @@ export const getProjects = createServerFn({ method: 'GET' }).handler(
           img3: data.img3,
           img4: data.img4,
           img5: data.img5,
+          img0_dark: data.img0_dark,
+          img1_dark: data.img1_dark,
+          img2_dark: data.img2_dark,
+          img3_dark: data.img3_dark,
+          img4_dark: data.img4_dark,
+          img5_dark: data.img5_dark,
 
           tags: { es: data.tags.es, en: data.tags.en },
           title: { es: data.title.es, en: data.title.en },
@@ -211,3 +223,51 @@ export const getProjects = createServerFn({ method: 'GET' }).handler(
     )
   },
 )
+
+export type ProjectDetail = Project & {
+  body: string
+}
+
+export const getProject = createServerFn({ method: 'GET' })
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data: slug }): Promise<ProjectDetail | null> => {
+    const projectsDir = path.join(process.cwd(), 'content', 'projects')
+    const filePath = path.join(projectsDir, `${slug}.md`)
+    try {
+      const fileContents = await fs.readFile(filePath, 'utf8')
+      const { data, content: body } = matter(fileContents)
+
+      return {
+        slug,
+        date: data.date,
+        goTo: data.goTo,
+        img0: data.img0,
+        img1: data.img1,
+        img2: data.img2,
+        img3: data.img3,
+        img4: data.img4,
+        img5: data.img5,
+        img0_dark: data.img0_dark,
+        img1_dark: data.img1_dark,
+        img2_dark: data.img2_dark,
+        img3_dark: data.img3_dark,
+        img4_dark: data.img4_dark,
+        img5_dark: data.img5_dark,
+
+        tags: { es: data.tags?.es || '', en: data.tags?.en || '' },
+        title: { es: data.title?.es || '', en: data.title?.en || '' },
+        shortDescription: {
+          es: data.shortDescription?.es || '',
+          en: data.shortDescription?.en || '',
+        },
+        content: { es: data.content?.es || '', en: data.content?.en || '' },
+        leyendaBoton: {
+          es: data.leyendaBoton?.es || '',
+          en: data.leyendaBoton?.en || '',
+        },
+        body,
+      }
+    } catch (e) {
+      return null
+    }
+  })

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import type { SetStateAction } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getLocale } from '#/paraglide/runtime'
@@ -10,6 +10,7 @@ import {
   CarouselItem,
   useCarousel,
 } from '../../components/motion-primitives/carousel'
+import { Link } from '@tanstack/react-router'
 
 export type LocalizedString = {
   es: string
@@ -26,6 +27,12 @@ export type Project = {
   img3: string
   img4: string
   img5: string
+  img0_dark: string
+  img1_dark: string
+  img2_dark: string
+  img3_dark: string
+  img4_dark: string
+  img5_dark: string
   tags: LocalizedString
   title: LocalizedString
   shortDescription: LocalizedString
@@ -36,20 +43,68 @@ export type Project = {
 export default function Gallery({ projects }: { projects: Project[] }) {
   const currentLang = getLocale()
   const [view, setView] = useState<'fullscreen' | 'grid'>('fullscreen')
+  const [activeFilter, setActiveFilter] = useState<string | null>(null)
 
   // Track the index AND the direction we are moving
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  const allTags = useMemo(() => {
+    const tags = new Set<string>()
+    projects.forEach(p => {
+      const pTags = p.tags?.[currentLang]
+      if (pTags) {
+        pTags.split(',').forEach(t => {
+          const trimmed = t.trim()
+          if (trimmed) tags.add(trimmed)
+        })
+      }
+    })
+    return Array.from(tags)
+  }, [projects, currentLang])
+
+  const filteredProjects = useMemo(() => {
+    if (!activeFilter) return projects
+    return projects.filter(p => {
+      const pTags = p.tags?.[currentLang] || ''
+      const projectTags = pTags.split(',').map(t => t.trim())
+      return projectTags.includes(activeFilter)
+    })
+  }, [projects, activeFilter, currentLang])
+
   return (
     <div className="h-full">
       {/* Global Header */}
-      <header className="absolute -top-1/15 left-0 w-full z-50 text-on-surface-variant font-mono label-medium">
+      <header className="absolute -top-1/15 left-0 w-full z-50 text-on-surface-variant font-mono label-medium flex items-center gap-6">
         <button
           onClick={() => setView(view === 'grid' ? 'fullscreen' : 'grid')}
           className="uppercase tracking-widest hover:opacity-70 transition-opacity"
         >
           {view === 'grid' ? 'Close' : m.gallery_title()}
         </button>
+        
+        {view === 'grid' && (
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={() => setActiveFilter(null)}
+              className={`uppercase tracking-widest transition-opacity ${
+                activeFilter === null ? 'font-bold opacity-100 text-primary' : 'opacity-50 hover:opacity-70'
+              }`}
+            >
+              {currentLang === 'es' ? 'Todos' : 'All'}
+            </button>
+            {allTags.map(tag => (
+              <button
+                key={tag}
+                onClick={() => setActiveFilter(tag)}
+                className={`uppercase tracking-widest transition-opacity ${
+                  activeFilter === tag ? 'font-bold opacity-100 text-primary' : 'opacity-50 hover:opacity-70'
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        )}
       </header>
 
       {/* Main Container */}
@@ -57,7 +112,7 @@ export default function Gallery({ projects }: { projects: Project[] }) {
         {view === 'grid' ? (
           <GridView
             key="grid"
-            projects={projects}
+            projects={filteredProjects}
             currentLang={currentLang}
             onSelect={(idx: SetStateAction<number>) => {
               setCurrentIndex(idx)
@@ -96,38 +151,45 @@ function GridView({
       className="w-full h-full grid grid-cols-3 gap-4 overflow-y-auto "
     >
       {projects.map((p, id) => (
-        <motion.div
-          key={p.slug}
-          onClick={() => onSelect(id)}
-          className="cursor-pointer w-full aspect-video flex flex-col justify-end group relative overflow-hidden"
-        >
-          {/* IMAGE: Shared layoutId only here */}
-          <motion.img
-            layoutId={`image-${p.slug}`}
-            className="absolute inset-0 w-full h-full object-cover"
-            src={p.img0}
-            alt={p.title[currentLang]}
-          />
+        <Link key={p.slug} to="/projects/$projectId" params={{ projectId: p.slug }}>
+          <motion.div
+            className="cursor-pointer w-full aspect-video flex flex-col justify-end group relative overflow-hidden"
+          >
+            <div className="relative w-full h-full">
+              <motion.img
+                layoutId={`image-${p.slug}-light`}
+                className="absolute inset-0 w-full h-full object-cover dark:hidden"
+                src={p.img0}
+                alt={p.title[currentLang]}
+              />
+              <motion.img
+                layoutId={`image-${p.slug}-dark`}
+                className="absolute inset-0 w-full h-full object-cover hidden dark:block"
+                src={p.img0_dark}
+                alt={p.title[currentLang]}
+              />
+            </div>
 
-          {/* GRADIENT OVERLAY: sits between image and text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/10 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity" />
+            {/* GRADIENT OVERLAY: sits between image and text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/10 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity" />
 
-          {/* TEXT CONTENT: z-20 to stay above gradient */}
-          <div className="relative z-20 px-4 py-2 flex flex-col ">
-            <motion.p
-              layoutId={`date-${p.slug}`}
-              className="label-medium text-on-surface-variant font-body"
-            >
-              {p.date}
-            </motion.p>
-            <motion.h3
-              layoutId={`title-${p.slug}`}
-              className="title-medium font-display text-on-surface"
-            >
-              {p.title[currentLang]}
-            </motion.h3>
-          </div>
-        </motion.div>
+            {/* TEXT CONTENT: z-20 to stay above gradient */}
+            <div className="relative z-20 px-4 py-2 flex flex-col ">
+              <motion.p
+                layoutId={`date-${p.slug}`}
+                className="label-medium text-on-surface-variant font-body"
+              >
+                {p.date}
+              </motion.p>
+              <motion.h3
+                layoutId={`title-${p.slug}`}
+                className="title-medium font-display text-on-surface"
+              >
+                {p.title[currentLang]}
+              </motion.h3>
+            </div>
+          </motion.div>
+        </Link>
       ))}
     </motion.div>
   )
@@ -152,13 +214,22 @@ function ProjectSlide({
       {/* Image: 
         Needs 'relative' and a higher z-index (z-10) to sit above the content box. 
       */}
-      <motion.img
-        layoutId={`image-${project.slug}`}
-        src={project.img0}
-        alt={project.title[currentLang]}
-        className="relative z-10 w-full h-full object-cover cursor-grab"
-        animate={{ filter: isActive ? 'brightness(1)' : 'brightness(0.4)' }}
-      />
+      <div className="relative z-10 w-full h-full">
+        <motion.img
+          layoutId={`image-${project.slug}-light`}
+          src={project.img0}
+          alt={project.title[currentLang]}
+          className="absolute inset-0 w-full h-full object-cover cursor-grab dark:hidden"
+          animate={{ filter: isActive ? 'brightness(1)' : 'brightness(0.4)' }}
+        />
+        <motion.img
+          layoutId={`image-${project.slug}-dark`}
+          src={project.img0_dark}
+          alt={project.title[currentLang]}
+          className="absolute inset-0 w-full h-full object-cover cursor-grab hidden dark:block"
+          animate={{ filter: isActive ? 'brightness(1)' : 'brightness(0.4)' }}
+        />
+      </div>
 
       <motion.div
         animate={{ opacity: isActive ? 1 : 0 }}
@@ -223,6 +294,13 @@ function FullscreenSlider({
             <p className="mt-2 body-small font-body text-on-surface-variant">
               {projects[activeIndex].content[currentLang]}
             </p>
+            <Link
+              to="/projects/$projectId"
+              params={{ projectId: projects[activeIndex].slug }}
+              className="my-5 w-fit items-center px-4 py-2 border border-outline text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 font-mono label-medium uppercase tracking-wider"
+            >
+              {m.gallery_button_details()}
+            </Link>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -236,18 +314,34 @@ function FullscreenSlider({
         <CarouselContent className="gap-10 h-full">
           {projects.map((p, i) => (
             <CarouselItem key={p.slug} className="h-full w-5/6">
-              <motion.img
-                layoutId={`image-${p.slug}`}
-                src={p.img0}
-                alt={p.title[currentLang]}
-                className="w-full h-full object-cover"
-                // Dim the inactive images
-                animate={{
-                  filter:
-                    activeIndex === i ? 'brightness(1)' : 'brightness(0.4)',
-                }}
-                transition={{ duration: 0.3 }}
-              />
+              <Link to="/projects/$projectId" params={{ projectId: p.slug }}>
+                <div className="relative w-full h-full">
+                  <motion.img
+                    layoutId={`image-${p.slug}-light`}
+                    src={p.img0}
+                    alt={p.title[currentLang]}
+                    className="absolute inset-0 w-full h-full object-cover dark:hidden"
+                    // Dim the inactive images
+                    animate={{
+                      filter:
+                        activeIndex === i ? 'brightness(1)' : 'brightness(0.4)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.img
+                    layoutId={`image-${p.slug}-dark`}
+                    src={p.img0_dark}
+                    alt={p.title[currentLang]}
+                    className="absolute inset-0 w-full h-full object-cover hidden dark:block"
+                    // Dim the inactive images
+                    animate={{
+                      filter:
+                        activeIndex === i ? 'brightness(1)' : 'brightness(0.4)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>
